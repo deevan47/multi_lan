@@ -1,18 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from 'tailwindcss'
-import nesting from '@tailwindcss/nesting'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/multi_lan/',   
   plugins: [react()],
-  css: {
-    postcss: {
-      plugins: [
-        nesting(),
-        tailwindcss(),
-        autoprefixer(),
-      ]
-    }
-  }
-})
+  optimizeDeps: {
+    include: ['hoist-non-react-statics'],
+    esbuildOptions: {
+      mainFields: ['module', 'main'],
+    },
+  },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
+});
